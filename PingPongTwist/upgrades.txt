@@ -1,0 +1,5 @@
+----Horizontal movemnt done 
+random movement
+paddle increase
+center line 
+ball speed
