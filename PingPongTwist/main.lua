@@ -169,7 +169,7 @@ function love.update(dt)
         
         if ball:collides(player1) then
           if player1.dx > 0 then
-            ball.dx = -ball.dx * 1.2
+            ball.dx = -ball.dx * 1.5
             ball.x = player1.x + 5
           elseif player1.dx < 0 then
             ball.dx = 185
@@ -191,7 +191,7 @@ function love.update(dt)
         --checking for collision with paddle 2
         if ball:collides(player2) then
           if player2.dx < 0 then
-            ball.dx = -ball.dx * 1.2
+            ball.dx = -ball.dx * 1.5
             ball.x = player2.x - 5
           elseif player2.dx > 0 then
             ball.dx = -185
@@ -215,9 +215,9 @@ function love.update(dt)
         --random ball movement
         if ball.x > VIRTUAL_WIDTH / 2 - 3 and ball.x < VIRTUAL_WIDTH / 2 + 3 then
           if ball.dx == -185  and random_negative == 1 then
-            ball.dy = math.random(-150, 150)
+            ball.dy = math.random(-200, 200)
           elseif ball.dx == 185 and random_positive == 1 then
-            ball.dy = math.random(-150, 150)
+            ball.dy = math.random(-200, 200)
           end
         end
 
@@ -250,7 +250,7 @@ function love.update(dt)
 
             -- if we've reached a score of 10, the game is over; set the
             -- state to done so we can show the victory message
-            if player2Score == 15 then
+            if player2Score == 5 then
                 winningPlayer = 2
                 gameState = 'done'
             else
@@ -268,7 +268,7 @@ function love.update(dt)
             disadvantaged_player = player2
             upgrade_name, disadvantaged_player  = upgrades(disadvantaged_player, player1Score)
 
-            if player1Score == 15 then
+            if player1Score == 5 then
                 winningPlayer = 1
                 gameState = 'done'
             else
@@ -381,7 +381,7 @@ function love.draw()
         love.graphics.setFont(smallFont)
         love.graphics.printf('Welcome to Pong!', 0, 10, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Score 15 Win!', 0, 20, VIRTUAL_WIDTH, 'center')
-        love.graphics.printf('Upgrades at 6,9 to losing player', 0, 30, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf('Upgrades at 2,3 to losing player', 0, 30, VIRTUAL_WIDTH, 'center')
         love.graphics.printf('Press Enter to begin!', 0, 40, VIRTUAL_WIDTH, 'center')
     elseif gameState == 'serve' then
         -- UI messages
@@ -449,22 +449,22 @@ end
 function upgrades(disadvantaged_player, advantaged_player_score)
   
   --paddle size upgrade
-    if advantaged_player_score == 6 and disadvantaged_player == player1 then
+    if advantaged_player_score == 2 and disadvantaged_player == player1 then
       has_upgrade = true
       player1 = Paddle(player1.x, player1.y, 5, 40, 10, 70,"Player 1")
       return "paddle increase", disadvantaged_player
-    elseif advantaged_player_score == 6 and disadvantaged_player == player2 then
+    elseif advantaged_player_score == 2 and disadvantaged_player == player2 then
       has_upgrade = true
       player2 = Paddle(player2.x, player2.y, 5, 40, VIRTUAL_WIDTH - 70, VIRTUAL_WIDTH - 10,"Player 2")
       return "paddle increase", disadvantaged_player
     end
     
   --random speed upgrade
-    if advantaged_player_score == 9 and disadvantaged_player == player1 then
+    if advantaged_player_score == 3 and disadvantaged_player == player1 then
       has_upgrade = true
       random_positive = 1
       return "random movement", disadvantaged_player
-    elseif advantaged_player_score == 9 and disadvantaged_player == player2 then
+    elseif advantaged_player_score == 3 and disadvantaged_player == player2 then
       has_upgrade = true
       random_negative = 1
       return "random movement", disadvantaged_player
